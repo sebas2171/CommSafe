@@ -57,7 +57,7 @@ class _LoginForm extends StatelessWidget {
     final loginForm = Provider.of<LoginFormProvider>(context);
     return Container(
       child: Form(
-        // TODO: mantener la referencia al KEY
+        //mantener la referencia al KEY
         key: loginForm.formKey,
         autovalidateMode: AutovalidateMode.onUserInteraction,
 
@@ -116,7 +116,7 @@ class _LoginForm extends StatelessWidget {
               onPressed: loginForm.isLoading
                   ? null
                   : () async {
-                      //TODO: login form
+                      //login form
 
                       FocusScope.of(context).unfocus();
 
@@ -126,7 +126,7 @@ class _LoginForm extends StatelessWidget {
 
                       await Future.delayed(Duration(seconds: 2));
 
-                      // TODO: validar si el login es correcto
+                      // validar si el login es correcto
                       loginForm.isLoading = false;
                       Navigator.pushReplacementNamed(context, 'home');
                     },

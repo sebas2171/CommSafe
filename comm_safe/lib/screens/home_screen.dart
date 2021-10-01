@@ -1,3 +1,4 @@
+import 'package:comm_safe/screens/screens.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -32,10 +33,10 @@ class _Navegacion extends StatelessWidget {
       onTap: (i) => navegacionmode.paginaActual = i,
       items: [
         BottomNavigationBarItem(
-            icon: Icon(Icons.person_outline), label: ('perfil')),
+            icon: Icon(Icons.public), label: ('noticias')),
         BottomNavigationBarItem(
             icon: Icon(Icons.add_alert_outlined), label: ('alerta')),
-        BottomNavigationBarItem(icon: Icon(Icons.public), label: ('noticias'))
+        BottomNavigationBarItem(icon: Icon(Icons.person_outline), label: ('perfil'))
       ],
     );
   }
@@ -51,7 +52,7 @@ class _Paginas extends StatelessWidget {
       //physics: BouncingScrollPhysics(),
       physics: NeverScrollableScrollPhysics(),
       children: <Widget>[
-        Container(color: Colors.red),
+        PostScreen(),
         Container(color: Colors.amber),
         Container(color: Colors.tealAccent)
       ],

@@ -5,6 +5,9 @@ import 'package:provider/provider.dart';
 class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+
+
+    
     return ChangeNotifierProvider(
       create: (_) => new _NavegacionModel(),
       child: Scaffold(

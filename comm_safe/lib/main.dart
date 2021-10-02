@@ -29,6 +29,7 @@ class MyApp extends StatelessWidget {
           'login': (_) => LoginScreen(),
           'register': (_) => RegisterScreen(),
           'home': (_) => HomeScreen(),
+          'product': (_) => PostScreen()
         },
         theme: mitema,
       ),

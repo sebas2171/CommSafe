@@ -13,6 +13,7 @@ class HomeScreen extends StatelessWidget {
             icon: Icon(Icons.exit_to_app),
             onPressed: () => (Navigator.pushReplacementNamed(context, 'login')),
           ),
+          
           title: Text('CommSafe',
               style: TextStyle(fontStyle: FontStyle.italic, fontSize: 25)),
         ),
@@ -36,7 +37,8 @@ class _Navegacion extends StatelessWidget {
             icon: Icon(Icons.public), label: ('noticias')),
         BottomNavigationBarItem(
             icon: Icon(Icons.add_alert_outlined), label: ('alerta')),
-        BottomNavigationBarItem(icon: Icon(Icons.person_outline), label: ('perfil'))
+        BottomNavigationBarItem(
+            icon: Icon(Icons.person_outline), label: ('perfil'))
       ],
     );
   }
@@ -52,7 +54,7 @@ class _Paginas extends StatelessWidget {
       //physics: BouncingScrollPhysics(),
       physics: NeverScrollableScrollPhysics(),
       children: <Widget>[
-        PostScreen(),
+        NewsScreen(),
         Container(color: Colors.amber),
         Container(color: Colors.tealAccent)
       ],

@@ -70,29 +70,40 @@ class AlertButtom extends StatelessWidget {
 class _Buttom extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: EdgeInsets.symmetric(
-        horizontal: 100,
-      ),
-      child: Container(
-        padding: EdgeInsets.all(10),
-        margin: EdgeInsets.only(top: 30, bottom: 30),
-        decoration: BoxDecoration(
-            color: Colors.red,
-            borderRadius: BorderRadius.circular(25),
-            boxShadow: [
-              BoxShadow(
-                color: Colors.grey,
-                blurRadius: 15,
-                offset: Offset(0, 5),
+    return Scaffold(
+      body: Center(
+        child: RaisedButton(
+          padding: EdgeInsets.all(15),
+          shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(18.0),
+              side: BorderSide(color: Colors.red)),
+          color: Colors.red,
+          child: Text('Generar Alerta',
+              style: TextStyle(
+                  fontSize: 30, color: Colors.black.withOpacity(0.6))),
+          onPressed: () {
+            showDialog(
+              context: context,
+              builder: (contex) => AlertDialog(
+                title: Text('La alerta se ha registrado satisfactoriamente.'),
+                content: Text('¿Desea publicar una Noticia?'),
+                actions: <Widget>[
+                  FlatButton(
+                    child: Text('OK'),
+                    onPressed: () {
+                      Navigator.pushNamed(context, 'product');
+                    },
+                  ),
+                  FlatButton(
+                    child: Text('Cancel'),
+                    onPressed: () {
+                      Navigator.of(context).pop('Cancel');
+                    },
+                  ),
+                ],
               ),
-            ]),
-        child: Text(
-          "ALERTA!!",
-          style: TextStyle(
-            fontSize: 30,
-            color: Colors.black.withOpacity(0.6),
-          ),
+            ).then((result) {});
+          },
         ),
       ),
     );

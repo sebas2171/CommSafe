@@ -11,7 +11,28 @@ class HomeScreen extends StatelessWidget {
         appBar: AppBar(
           leading: IconButton(
             icon: Icon(Icons.exit_to_app),
-            onPressed: () => (Navigator.pushReplacementNamed(context, 'login')),
+            onPressed: () {
+              showDialog(
+                context: context,
+                builder: (contex) => AlertDialog(
+                  title: Text('¿Realmente desea salir de CommSafe?'),
+                  actions: <Widget>[
+                    FlatButton(
+                      child: Text('Aceptar'),
+                      onPressed: () {
+                        Navigator.pushReplacementNamed(context, 'login');
+                      },
+                    ),
+                    FlatButton(
+                      child: Text('Cancelar'),
+                      onPressed: () {
+                        Navigator.of(context).pop('Cancel');
+                      },
+                    ),
+                  ],
+                ),
+              ).then((result) {});
+            },
           ),
           title: Text('CommSafe',
               style: TextStyle(fontStyle: FontStyle.italic, fontSize: 25)),

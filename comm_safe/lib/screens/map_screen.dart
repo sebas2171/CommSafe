@@ -89,13 +89,13 @@ class _Buttom extends StatelessWidget {
                 content: Text('¿Desea publicar una Noticia?'),
                 actions: <Widget>[
                   FlatButton(
-                    child: Text('OK'),
+                    child: Text('Aceptar'),
                     onPressed: () {
                       Navigator.pushNamed(context, 'product');
                     },
                   ),
                   FlatButton(
-                    child: Text('Cancel'),
+                    child: Text('Cancelar'),
                     onPressed: () {
                       Navigator.of(context).pop('Cancel');
                     },

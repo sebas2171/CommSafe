@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:io';
 import 'package:comm_safe/models/models.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
@@ -8,6 +9,9 @@ class PostService with ChangeNotifier{
   final String _baseUrl = 'commsafe-cbacc-default-rtdb.firebaseio.com';
   final List<Post> posts = [];
   Post selectedPost;
+
+  File pictureFile;
+
   bool isLoading = true;
   bool isSaving = false;
 
@@ -87,6 +91,31 @@ class PostService with ChangeNotifier{
     this.posts.add(post);
 
     return post.id;
+
+  }
+
+    Future<String> deletePost(Post post)async{
+
+    final url = Uri.https(_baseUrl, 'posts/${post.id}.json');
+    final resp = await http.delete( url, body: post.toJson());
+    final decoderData = json.decode(resp.body);
+
+    final index = this.posts.indexWhere((element) => element.id == post.id);
+    this.posts[index] = post;
+
+    notifyListeners();
+
+    return post.id;
+
+
+  }
+
+  void updateoruploadImage(String path){
+
+    this.selectedPost.picture = path;
+    this.pictureFile = File.fromUri(Uri(path: path));
+
+    notifyListeners();
 
   }
 

@@ -1,11 +1,10 @@
-import 'dart:ffi';
-
 import 'package:comm_safe/provider/post_form_provider.dart';
 import 'package:comm_safe/services/post_service.dart';
 import 'package:comm_safe/widgets/widgets.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:image_picker/image_picker.dart';
 
 class PostScreen extends StatelessWidget {
 
@@ -57,16 +56,47 @@ class _PostScreenBody extends StatelessWidget {
 
                 Positioned(
                   child: IconButton(
-                  onPressed: () {}, 
+                  onPressed: () async{
+
+                    final picker = new ImagePicker();
+                    final PickedFile pickedFile = await picker.getImage(
+                      source: ImageSource.camera,
+                      imageQuality: 100);
+
+                    postService.updateoruploadImage(pickedFile.path);
+
+                  }, 
                   icon: Icon(Icons.camera_alt_rounded, size: 40, color: Colors.white)),
                   top: 60,
                   right: 20,
                   
-                  )
+                  ),
+
+                  Positioned(
+                  child: IconButton(
+                  onPressed: () async{
+
+                    final picker = new ImagePicker();
+                    final PickedFile pickedFile = await picker.getImage(
+                      source: ImageSource.gallery,
+                      imageQuality: 100);
+
+
+                  }, 
+                  icon: Icon(Icons.image_search_outlined, size: 40, color: Colors.white)),
+                  top: 120,
+                  right: 20,
+                  
+                  ),
+
+                  
+
 
               ],
 
             ),
+
+            
 
             _PostForm(),
 

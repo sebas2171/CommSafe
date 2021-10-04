@@ -1,6 +1,6 @@
 import 'package:comm_safe/models/models.dart';
-import 'package:comm_safe/screens/screens.dart';
 import 'package:comm_safe/services/services.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -45,6 +45,45 @@ class PostCard extends StatelessWidget {
               icon: Icon(Icons.edit, size: 25, color: Colors.grey)),
               top: 5,
               right: 5,
+
+            ),
+
+            Positioned(
+              child: IconButton(
+              onPressed: (){
+
+                showDialog(context: context, 
+                builder: (context) => AlertDialog(
+                  title: Text('Cuidado, ¿desea eliminar la publicacion permanentemente?'),
+                  actions: [
+
+                    TextButton(
+                      child: Text('Cancelar'), 
+                      onPressed: (){
+
+                        Navigator.of(context).pop('cancel');
+
+                      }),
+
+                    TextButton(
+                      child: Text('Aceptar'), 
+                      onPressed: (){
+                        postService.deletePost(postService.posts[index]);
+                        Navigator.pushNamed(context, 'home');
+                      }),
+
+
+                  ],
+                ));
+              
+                postService.selectedPost = postService.posts[index];
+                
+                postService.deletePost(postService.selectedPost);
+
+              }, 
+              icon: Icon(Icons.delete, size: 25, color: Colors.red)),
+              top: 5,
+              left: 5,
 
             ),
               

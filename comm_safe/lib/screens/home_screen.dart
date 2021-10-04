@@ -74,8 +74,9 @@ class _Paginas extends StatelessWidget {
       physics: NeverScrollableScrollPhysics(),
       children: <Widget>[
         NewsScreen(),
-        MapScreen(),
-        Container(color: Colors.tealAccent)
+        //MapScreen(),
+        Container(color: Colors.tealAccent),
+        Container(color: Colors.red)
       ],
     );
   }

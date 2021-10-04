@@ -22,7 +22,7 @@ class PostImage extends StatelessWidget {
           child: this.url == null
           ? Image(image: AssetImage('assets/no-image.png'), fit: BoxFit.cover) 
           : FadeInImage(
-            image: NetworkImage('https://via.placeholder.com/400x300/green'),
+            image: NetworkImage(this.url),
             placeholder: AssetImage('assets/1.gif'),
             fit: BoxFit.cover,
           ),

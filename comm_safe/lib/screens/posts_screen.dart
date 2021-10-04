@@ -1,3 +1,6 @@
+import 'dart:ffi';
+
+import 'package:comm_safe/provider/post_form_provider.dart';
 import 'package:comm_safe/services/post_service.dart';
 import 'package:comm_safe/widgets/widgets.dart';
 import 'package:flutter/cupertino.dart';
@@ -11,6 +14,26 @@ class PostScreen extends StatelessWidget {
   Widget build(BuildContext context) {
 
     final postService = Provider.of<PostService>(context);
+
+    return ChangeNotifierProvider(
+      create: (_) => PostFormProvider(postService.selectedPost),
+      child: _PostScreenBody(postService: postService));
+
+  }
+}
+
+class _PostScreenBody extends StatelessWidget {
+  const _PostScreenBody({
+    Key key,
+    @required this.postService,
+  }) : super(key: key);
+
+  final PostService postService;
+
+  @override
+  Widget build(BuildContext context) {
+
+    final postForm = Provider.of<PostFormProvider>(context);
 
     return Scaffold(
 
@@ -55,7 +78,15 @@ class PostScreen extends StatelessWidget {
       floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
       floatingActionButton: FloatingActionButton(
         child: Icon(Icons.save_outlined),
-        onPressed: (){},
+        onPressed: () async{
+
+          if (!postForm.isValidForm()) return;
+
+          postService.saveOrCreatePost(postForm.post);
+
+          Navigator.of(context).pop();
+          
+        },
       )
 
 
@@ -67,6 +98,10 @@ class _PostForm extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
+    final postForm = Provider.of<PostFormProvider>(context);
+    final post = postForm.post;
+
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: 10),
       child: Container(
@@ -74,12 +109,18 @@ class _PostForm extends StatelessWidget {
         width: double.infinity,
         decoration: _buildBoxDecoration(),
         child: Form(
+          key: postForm.formKey,
+          autovalidateMode:AutovalidateMode.onUserInteraction ,
           child: Column(
             children: [
               SizedBox(height: 10),
 
-              TextField(
+              TextFormField(
                 maxLength: 35,
+                initialValue: post.titulo,
+                onChanged: (value) => post.titulo = value,
+                validator: (value){if(value == null || value.length < 1) return 'Titulo obligatorio';},
+                
                 decoration: InputDecoration(
                   
                   enabledBorder: UnderlineInputBorder(
@@ -96,16 +137,20 @@ class _PostForm extends StatelessWidget {
 
                   hintText: 'Titulo',
                   labelText: 'Titulo de la publicacion'
-
+                  
               ),
               ),
 
               SizedBox(height: 30),
               
 
-              TextField(
+              TextFormField(
                 maxLength: 200 ,
                 maxLines: null,
+                initialValue: post.detalle,
+                onChanged: (value) => post.detalle = value,
+                validator: (value) {if(value == null || value.length < 1) return 'Descripcion es obligatoria';},
+                
                 decoration: InputDecoration(
                   labelText: 'Descripcion de lo sucedido',
                   border: OutlineInputBorder(),

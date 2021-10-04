@@ -22,13 +22,14 @@ class NewsScreen extends StatelessWidget{
       body: ListView.builder(
         itemCount: postService.posts.length,
         //el metodo PostCard() se encuentra dentro de la carpeta widgets en el archivo Post_card.dart
-        itemBuilder: (BuildContext context, int index) => PostCard(posts: postService.posts[index])
+        itemBuilder: (BuildContext context, int index) => PostCard(posts: postService.posts[index]),
+        
       ),
       floatingActionButton: FloatingActionButton(
         child: Icon(Icons.add),
         onPressed: (){ 
 
-          postService.selectedPost = new Post();
+          postService.selectedPost = new Post( titulo: '', detalle: '');
           
           Navigator.pushNamed(context, 'post');
           

@@ -1,12 +1,14 @@
 import 'package:comm_safe/models/models.dart';
+import 'package:comm_safe/screens/screens.dart';
+import 'package:comm_safe/services/services.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 //Positioned(child: _PostDescription(posts.detalle), top: 60, left: 25, right: 25),
 
  //Positioned(child: _Backgroundimage(posts.picture), top: 130, left: 25, right: 25, bottom: 0)
 
 class PostCard extends StatelessWidget {
-
 
   final Post posts;
 
@@ -16,6 +18,10 @@ class PostCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
+    final postService = Provider.of<PostService>(context);
+    final index = postService.posts.indexWhere((element) => element.id == posts.id);
+
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: 15 ),
       child: Container(
@@ -27,6 +33,23 @@ class PostCard extends StatelessWidget {
           children: [
 
             Positioned(child: _PostTitle(posts.titulo), top: 0, left: 0, right: 50,),
+            
+            Positioned(
+              child: IconButton(
+              onPressed: () {
+              
+                postService.selectedPost = postService.posts[index].copy();
+                Navigator.pushNamed(context, 'post');
+
+              }, 
+              icon: Icon(Icons.edit, size: 25, color: Colors.grey)),
+              top: 5,
+              right: 5,
+
+            ),
+              
+              
+            
 
             Container(
 
@@ -77,9 +100,14 @@ class _PostTitle extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
         child: 
-        Center(
-          child: Text('$titulo', 
-            style: TextStyle(color: Colors.white, fontSize: 18, fontStyle: FontStyle.italic),textAlign: TextAlign.center),
+        Column(
+          children:[ Center(
+            child: Text('$titulo', 
+              style: TextStyle(color: Colors.white, fontSize: 17, fontStyle: FontStyle.italic),textAlign: TextAlign.center),
+          ),
+          SizedBox(height: 5),
+          Text('Etiquetas: robo a mano armada, hurto', style: TextStyle(color: Colors.white, fontSize: 13, fontStyle: FontStyle.italic))
+        ]
         ),
         
         decoration: 
@@ -87,7 +115,7 @@ class _PostTitle extends StatelessWidget {
         borderRadius: BorderRadius.only( bottomRight: Radius.circular(20))
         ),
         
-        height: 50
+        height: 60
         
     );
   }

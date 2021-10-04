@@ -9,6 +9,7 @@ class PostService with ChangeNotifier{
   final List<Post> posts = [];
   Post selectedPost;
   bool isLoading = true;
+  bool isSaving = false;
 
   PostService (){
 
@@ -37,6 +38,55 @@ class PostService with ChangeNotifier{
     notifyListeners();
 
     return this.posts;
+
+  }
+
+  Future saveOrCreatePost(Post post) async{
+
+    isSaving = true;
+    notifyListeners();
+
+
+    if (post.id == null){
+
+      await this.createPost(post);
+
+    }
+    else {
+      await this.updatePost(post);
+    }
+
+
+    isSaving = false;
+    notifyListeners();
+
+  }
+
+  Future<String> updatePost(Post post)async{
+    
+    final url = Uri.https(_baseUrl, 'posts/${post.id}.json');
+    final resp = await http.put( url, body: post.toJson());
+    final decoderData = resp.body;
+
+    final index = this.posts.indexWhere((element) => element.id == post.id);
+    this.posts[index] = post;
+
+    return post.id;
+
+  }
+
+
+  Future<String> createPost(Post post)async{
+    
+    final url = Uri.https(_baseUrl, 'posts.json');
+    final resp = await http.post( url, body: post.toJson());
+    final decoderData = json.decode(resp.body);
+
+    post.id = decoderData ['name'];
+
+    this.posts.add(post);
+
+    return post.id;
 
   }
 

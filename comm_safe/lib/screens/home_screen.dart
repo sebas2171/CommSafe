@@ -5,18 +5,35 @@ import 'package:provider/provider.dart';
 class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-
-
-    
     return ChangeNotifierProvider(
       create: (_) => new _NavegacionModel(),
       child: Scaffold(
         appBar: AppBar(
           leading: IconButton(
             icon: Icon(Icons.exit_to_app),
-            onPressed: () => (Navigator.pushReplacementNamed(context, 'login')),
+            onPressed: () {
+              showDialog(
+                context: context,
+                builder: (contex) => AlertDialog(
+                  title: Text('¿Realmente desea salir de CommSafe?'),
+                  actions: <Widget>[
+                    TextButton(
+                      child: Text('Aceptar'),
+                      onPressed: () {
+                        Navigator.pushReplacementNamed(context, 'login');
+                      },
+                    ),
+                    TextButton(
+                      child: Text('Cancelar'),
+                      onPressed: () {
+                        Navigator.of(context).pop('Cancel');
+                      },
+                    ),
+                  ],
+                ),
+              ).then((result) {});
+            },
           ),
-          
           title: Text('CommSafe',
               style: TextStyle(fontStyle: FontStyle.italic, fontSize: 25)),
         ),
@@ -36,8 +53,7 @@ class _Navegacion extends StatelessWidget {
       currentIndex: navegacionmode.paginaActual,
       onTap: (i) => navegacionmode.paginaActual = i,
       items: [
-        BottomNavigationBarItem(
-            icon: Icon(Icons.public), label: ('noticias')),
+        BottomNavigationBarItem(icon: Icon(Icons.public), label: ('noticias')),
         BottomNavigationBarItem(
             icon: Icon(Icons.add_alert_outlined), label: ('alerta')),
         BottomNavigationBarItem(
@@ -58,7 +74,7 @@ class _Paginas extends StatelessWidget {
       physics: NeverScrollableScrollPhysics(),
       children: <Widget>[
         NewsScreen(),
-        Container(color: Colors.amber),
+        MapScreen(),
         Container(color: Colors.tealAccent)
       ],
     );

@@ -1,3 +1,5 @@
+import 'package:comm_safe/models/models.dart';
+import 'package:comm_safe/screens/screens.dart';
 import 'package:comm_safe/services/services.dart';
 import 'package:comm_safe/widgets/widgets.dart';
 import 'package:flutter/material.dart';
@@ -10,19 +12,31 @@ class NewsScreen extends StatelessWidget{
 
     final postService = Provider.of<PostService>(context);
 
+    if(postService.isLoading){
+      return LoadingScreen();
+    }
+    else{
+
     return Scaffold(
 
       body: ListView.builder(
-        itemCount: 10,
+        itemCount: postService.posts.length,
         //el metodo PostCard() se encuentra dentro de la carpeta widgets en el archivo Post_card.dart
-        itemBuilder: (BuildContext context, int index) => PostCard()
+        itemBuilder: (BuildContext context, int index) => PostCard(posts: postService.posts[index])
       ),
       floatingActionButton: FloatingActionButton(
         child: Icon(Icons.add),
-        onPressed: () => Navigator.pushNamed(context, 'product')
+        onPressed: (){ 
+
+          postService.selectedPost = new Post();
+          
+          Navigator.pushNamed(context, 'post');
+          
+          }
         ),
         
 
     ) ;
+  }
   }
 }

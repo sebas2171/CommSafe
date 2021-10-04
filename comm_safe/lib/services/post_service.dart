@@ -7,6 +7,7 @@ class PostService with ChangeNotifier{
 
   final String _baseUrl = 'commsafe-cbacc-default-rtdb.firebaseio.com';
   final List<Post> posts = [];
+  Post selectedPost;
   bool isLoading = true;
 
   PostService (){
@@ -32,7 +33,7 @@ class PostService with ChangeNotifier{
 
     });
 
-    //this.isLoading = false;
+    this.isLoading = false;
     notifyListeners();
 
     return this.posts;

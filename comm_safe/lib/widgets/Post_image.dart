@@ -2,6 +2,10 @@ import 'package:flutter/material.dart';
 
 class PostImage extends StatelessWidget {
 
+   final String url;
+  const PostImage( this.url);
+   
+
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -14,7 +18,10 @@ class PostImage extends StatelessWidget {
         height: 450,
         child: ClipRRect(
           borderRadius: BorderRadius.only( topLeft: Radius.circular(45) , topRight: Radius.circular(45) ),
-          child: FadeInImage(
+          
+          child: this.url == null
+          ? Image(image: AssetImage('assets/no-image.png'), fit: BoxFit.cover) 
+          : FadeInImage(
             image: NetworkImage('https://via.placeholder.com/400x300/green'),
             placeholder: AssetImage('assets/1.gif'),
             fit: BoxFit.cover,

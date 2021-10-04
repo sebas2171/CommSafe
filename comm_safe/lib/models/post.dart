@@ -9,6 +9,7 @@ class Post {
         this.detalle,
         this.picture,
         this.titulo,
+        this.id
     });
 
     String detalle;
@@ -31,4 +32,13 @@ class Post {
         "picture": picture,
         "titulo": titulo,
     };
+
+
+    Post copy() => Post(
+
+      detalle: this.detalle,
+      picture: this.picture,
+      titulo: this.titulo,
+      id: this.id
+    );
 }

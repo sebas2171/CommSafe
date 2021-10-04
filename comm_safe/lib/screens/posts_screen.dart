@@ -1,12 +1,16 @@
+import 'package:comm_safe/services/post_service.dart';
 import 'package:comm_safe/widgets/widgets.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class PostScreen extends StatelessWidget {
 
 
   @override
   Widget build(BuildContext context) {
+
+    final postService = Provider.of<PostService>(context);
 
     return Scaffold(
 
@@ -18,7 +22,7 @@ class PostScreen extends StatelessWidget {
 
               children: [
 
-                PostImage(),
+                PostImage(postService.selectedPost.picture),
                 Positioned(
                   child: IconButton(
                   onPressed: () => Navigator.of(context).pop(), 

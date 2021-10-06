@@ -28,7 +28,7 @@ class HomeScreen extends StatelessWidget {
                       onPressed: () {
                         Navigator.of(context).pop('Cancel');
                       },
-                    ),
+                    )
                   ],
                 ),
               ).then((result) {});

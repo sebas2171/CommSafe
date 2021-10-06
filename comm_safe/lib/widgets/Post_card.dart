@@ -50,7 +50,7 @@ class PostCard extends StatelessWidget {
 
             Positioned(
               child: IconButton(
-              onPressed: (){
+              onPressed:(){
 
                 showDialog(context: context, 
                 builder: (context) => AlertDialog(
@@ -67,9 +67,10 @@ class PostCard extends StatelessWidget {
 
                     TextButton(
                       child: Text('Aceptar'), 
-                      onPressed: (){
-                        postService.deletePost(postService.posts[index]);
-                        Navigator.pushNamed(context, 'home');
+                      onPressed: 
+                      () async{
+                        await postService.deletePost(postService.posts[index]);
+                        Navigator.popAndPushNamed(context, 'news');
                       }),
 
 

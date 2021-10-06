@@ -80,6 +80,8 @@ class _PostScreenBody extends StatelessWidget {
                     final PickedFile pickedFile = await picker.getImage(
                       source: ImageSource.gallery,
                       imageQuality: 100);
+                    
+                    postService.updateoruploadImage(pickedFile.path);
 
 
                   }, 
@@ -107,12 +109,21 @@ class _PostScreenBody extends StatelessWidget {
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
       floatingActionButton: FloatingActionButton(
-        child: Icon(Icons.save_outlined),
-        onPressed: () async{
+        child: postService.isSaving
+        ? CircularProgressIndicator(color: Colors.white)
+        :Icon(Icons.save_outlined),
+        onPressed: postService.isSaving
+        ? null
+        :    
+        () async{
 
           if (!postForm.isValidForm()) return;
 
-          postService.saveOrCreatePost(postForm.post);
+          final String imageUrl = await postService.uploadImage();
+
+          if (imageUrl != null ) postForm.post.picture = imageUrl;
+
+          await postService.saveOrCreatePost(postForm.post);
 
           Navigator.of(context).pop();
           
@@ -150,6 +161,7 @@ class _PostForm extends StatelessWidget {
                 initialValue: post.titulo,
                 onChanged: (value) => post.titulo = value,
                 validator: (value){if(value == null || value.length < 1) return 'Titulo obligatorio';},
+                autocorrect: false,
                 
                 decoration: InputDecoration(
                   
@@ -180,7 +192,7 @@ class _PostForm extends StatelessWidget {
                 initialValue: post.detalle,
                 onChanged: (value) => post.detalle = value,
                 validator: (value) {if(value == null || value.length < 1) return 'Descripcion es obligatoria';},
-                
+                autocorrect: false,
                 decoration: InputDecoration(
                   labelText: 'Descripcion de lo sucedido',
                   border: OutlineInputBorder(),

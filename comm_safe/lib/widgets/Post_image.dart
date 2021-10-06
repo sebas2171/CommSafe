@@ -30,7 +30,7 @@ class PostImage extends StatelessWidget {
 
   BoxDecoration _buildBoxDecoration() => BoxDecoration(
 
-    color: Colors.red,
+    color: Colors.black,
     borderRadius: BorderRadius.only( topLeft: Radius.circular(45) , topRight: Radius.circular(45) ),
     boxShadow: [
 

@@ -14,6 +14,7 @@ class PostService with ChangeNotifier{
 
   bool isLoading = true;
   bool isSaving = false;
+  bool isDelete = false;
 
   PostService (){
 
@@ -96,6 +97,9 @@ class PostService with ChangeNotifier{
 
     Future<String> deletePost(Post post)async{
 
+    this.isDelete = true;
+    notifyListeners();
+    
     final url = Uri.https(_baseUrl, 'posts/${post.id}.json');
     final resp = await http.delete( url, body: post.toJson());
     final decoderData = json.decode(resp.body);
@@ -103,6 +107,7 @@ class PostService with ChangeNotifier{
     final index = this.posts.indexWhere((element) => element.id == post.id);
     this.posts[index] = post;
 
+    this.isDelete = true;
     notifyListeners();
 
     return post.id;
@@ -116,6 +121,36 @@ class PostService with ChangeNotifier{
     this.pictureFile = File.fromUri(Uri(path: path));
 
     notifyListeners();
+
+  }
+
+  Future<String> uploadImage() async{
+
+    if(this.pictureFile == null) return null;
+    this.isSaving = true;
+    notifyListeners();
+
+    final url = Uri.parse('https://api.cloudinary.com/v1_1/commsafe/image/upload?upload_preset=h1hdfcmt');
+
+    final imageUploadRequest = http.MultipartRequest('POST', url);
+
+    final file = await http.MultipartFile.fromPath('file', pictureFile.path);
+
+    imageUploadRequest.files.add(file);
+
+    final streamResponse = await imageUploadRequest.send();
+    final resp = await http.Response.fromStream(streamResponse);
+
+    if(resp.statusCode != 200 && resp.statusCode != 201){
+      print('algo salio mal');
+      print(resp.body);
+      return null;
+    }
+
+    this.pictureFile = null;
+
+    final decodeData = json.decode(resp.body);
+    return decodeData['secure_url'];
 
   }
 

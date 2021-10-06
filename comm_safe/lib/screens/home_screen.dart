@@ -18,17 +18,18 @@ class HomeScreen extends StatelessWidget {
                   title: Text('¿Realmente desea salir de CommSafe?'),
                   actions: <Widget>[
                     TextButton(
-                      child: Text('Aceptar', style: TextStyle(fontSize: 18)),
-                      onPressed: () {
-                        Navigator.pushReplacementNamed(context, 'login');
-                      },
-                    ),
-                    TextButton(
                       child: Text('Cancelar', style: TextStyle(fontSize: 18)),
                       onPressed: () {
                         Navigator.of(context).pop('Cancel');
                       },
                     ),
+                    
+                    TextButton(
+                      child: Text('Aceptar', style: TextStyle(fontSize: 18)),
+                      onPressed: () {
+                        Navigator.pushReplacementNamed(context, 'login');
+                      },
+                    )
                   ],
                 ),
               ).then((result) {});

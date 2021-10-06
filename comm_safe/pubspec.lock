@@ -93,6 +93,7 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
+<<<<<<< HEAD
   geolocator:
     dependency: "direct main"
     description:
@@ -107,6 +108,8 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.0.4"
+=======
+>>>>>>> 2ab8c0e64ee48f46e72633ead856257372b4a532
   google_maps_flutter:
     dependency: "direct main"
     description:

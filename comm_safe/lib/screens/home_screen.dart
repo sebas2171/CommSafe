@@ -18,13 +18,13 @@ class HomeScreen extends StatelessWidget {
                   title: Text('¿Realmente desea salir de CommSafe?'),
                   actions: <Widget>[
                     TextButton(
-                      child: Text('Aceptar'),
+                      child: Text('Aceptar', style: TextStyle(fontSize: 18)),
                       onPressed: () {
                         Navigator.pushReplacementNamed(context, 'login');
                       },
                     ),
                     TextButton(
-                      child: Text('Cancelar'),
+                      child: Text('Cancelar', style: TextStyle(fontSize: 18)),
                       onPressed: () {
                         Navigator.of(context).pop('Cancel');
                       },
@@ -74,8 +74,7 @@ class _Paginas extends StatelessWidget {
       physics: NeverScrollableScrollPhysics(),
       children: <Widget>[
         NewsScreen(),
-        //MapScreen(),
-        Container(color: Colors.tealAccent),
+        MapScreen(),
         Container(color: Colors.red)
       ],
     );

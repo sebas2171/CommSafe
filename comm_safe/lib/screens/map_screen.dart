@@ -1,6 +1,6 @@
-/*
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:flutter/material.dart';
+import 'package:comm_safe/services/services.dart';
 
 class MapScreen extends StatefulWidget {
   @override
@@ -75,10 +75,10 @@ class _Buttom extends StatelessWidget {
       body: Center(
         child: RaisedButton(
           padding: EdgeInsets.all(15),
+          color: Colors.red,
           shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(18.0),
               side: BorderSide(color: Colors.red)),
-          color: Colors.red,
           child: Text('Generar Alerta',
               style: TextStyle(
                   fontSize: 30, color: Colors.black.withOpacity(0.6))),
@@ -90,13 +90,13 @@ class _Buttom extends StatelessWidget {
                 content: Text('¿Desea publicar una Noticia?'),
                 actions: <Widget>[
                   FlatButton(
-                    child: Text('Aceptar'),
+                    child: Text('Aceptar', style: TextStyle(fontSize: 18)),
                     onPressed: () {
-                      Navigator.pushNamed(context, 'product');
+                      Navigator.pushNamed(context, 'post');
                     },
                   ),
                   FlatButton(
-                    child: Text('Cancelar'),
+                    child: Text('Cancelar', style: TextStyle(fontSize: 18)),
                     onPressed: () {
                       Navigator.of(context).pop('Cancel');
                     },
@@ -110,4 +110,3 @@ class _Buttom extends StatelessWidget {
     );
   }
 }
-*/

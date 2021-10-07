@@ -1,6 +1,8 @@
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:flutter/material.dart';
+import 'package:comm_safe/models/models.dart';
 import 'package:comm_safe/services/services.dart';
+import 'package:provider/provider.dart';
 
 class MapScreen extends StatefulWidget {
   @override
@@ -71,6 +73,7 @@ class AlertButtom extends StatelessWidget {
 class _Buttom extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    final postService = Provider.of<PostService>(context);
     return Scaffold(
       body: Center(
         child: RaisedButton(
@@ -90,13 +93,15 @@ class _Buttom extends StatelessWidget {
                 content: Text('¿Desea publicar una Noticia?'),
                 actions: <Widget>[
                   FlatButton(
-                    child: Text('Aceptar', style: TextStyle(fontSize: 18)),
+                    child: Text('Aceptar', style: TextStyle(fontSize: 16)),
                     onPressed: () {
+                      postService.selectedPost =
+                          new Post(titulo: '', detalle: '');
                       Navigator.pushNamed(context, 'post');
                     },
                   ),
                   FlatButton(
-                    child: Text('Cancelar', style: TextStyle(fontSize: 18)),
+                    child: Text('Cancelar', style: TextStyle(fontSize: 16)),
                     onPressed: () {
                       Navigator.of(context).pop('Cancel');
                     },

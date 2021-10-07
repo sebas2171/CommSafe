@@ -7,7 +7,7 @@ import 'package:http/http.dart' as http;
 class PostService with ChangeNotifier{
 
   final String _baseUrl = 'commsafe-cbacc-default-rtdb.firebaseio.com';
-  final List<Post> posts = [];
+  List<Post> posts = [];
   Post selectedPost;
 
   File pictureFile;
@@ -23,6 +23,7 @@ class PostService with ChangeNotifier{
 
   Future<List<Post>> loadPosts() async {
 
+    this.posts = [];
     this.isLoading = true;
     notifyListeners();
 

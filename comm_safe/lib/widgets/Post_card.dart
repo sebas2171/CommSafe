@@ -60,9 +60,10 @@ class PostCard extends StatelessWidget {
                                 TextButton(
                                     child: Text('Aceptar',
                                         style: TextStyle(fontSize: 16)),
-                                    onPressed: () {
-                                      postService.deletePost(postService.posts[index]);
+                                    onPressed: () async {
+                                      await postService.deletePost(postService.posts[index]);
                                       Navigator.pushNamed(context, 'home');
+                                      await postService.loadPosts();
                                     }),
                               ],
                             ));

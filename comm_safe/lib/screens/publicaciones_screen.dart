@@ -15,7 +15,7 @@ class NewsScreen extends StatelessWidget {
     } else {
       return Scaffold(
         body: RefreshIndicator(
-          onRefresh: ()=> postService.loadPosts(),
+          onRefresh: () => postService.loadPosts(),
           child: ListView.builder(
             itemCount: postService.posts.length,
             //el metodo PostCard() se encuentra dentro de la carpeta widgets en el archivo Post_card.dart

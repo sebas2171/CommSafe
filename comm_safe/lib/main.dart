@@ -26,7 +26,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Post Robos',
-      initialRoute: 'login',
+      initialRoute: 'home',
       routes: {
         'login': (_) => LoginScreen(),
         'register': (_) => RegisterScreen(),

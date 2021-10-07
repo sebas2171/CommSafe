@@ -63,8 +63,12 @@ class _PostScreenBody extends StatelessWidget {
                       source: ImageSource.camera,
                       imageQuality: 100);
 
-                    postService.updateoruploadImage(pickedFile.path);
+                      if (pickedFile == null) {
+                      return;
+                    }
 
+                    postService.updateoruploadImage(pickedFile.path);
+                
                   }, 
                   icon: Icon(Icons.camera_alt_rounded, size: 40, color: Colors.white)),
                   top: 60,
@@ -80,6 +84,10 @@ class _PostScreenBody extends StatelessWidget {
                     final PickedFile pickedFile = await picker.getImage(
                       source: ImageSource.gallery,
                       imageQuality: 100);
+                    
+                     if (pickedFile == null) {
+                      return;
+                    }
                     
                     postService.updateoruploadImage(pickedFile.path);
 

@@ -14,10 +14,13 @@ class NewsScreen extends StatelessWidget {
       return LoadingScreen();
     } else {
       return Scaffold(
-        body: ListView.builder(
-          itemCount: postService.posts.length,
-          //el metodo PostCard() se encuentra dentro de la carpeta widgets en el archivo Post_card.dart
-          itemBuilder: (BuildContext context, int index) => PostCard(posts: postService.posts[index]),
+        body: RefreshIndicator(
+          onRefresh: ()=> postService.loadPosts(),
+          child: ListView.builder(
+            itemCount: postService.posts.length,
+            //el metodo PostCard() se encuentra dentro de la carpeta widgets en el archivo Post_card.dart
+            itemBuilder: (BuildContext context, int index) => PostCard(posts: postService.posts[index]),
+          ),
         ),
         floatingActionButton: FloatingActionButton(
             child: Icon(Icons.add),

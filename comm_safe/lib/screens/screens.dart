@@ -5,3 +5,4 @@ export 'package:comm_safe/screens/publicaciones_screen.dart';
 export 'package:comm_safe/screens/posts_screen.dart';
 export 'package:comm_safe/screens/loading_screen.dart';
 export 'package:comm_safe/screens/map_screen.dart';
+export 'package:comm_safe/screens/check_auth_screen.dart';

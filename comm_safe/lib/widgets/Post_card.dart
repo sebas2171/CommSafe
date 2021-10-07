@@ -61,16 +61,11 @@ class PostCard extends StatelessWidget {
                                     child: Text('Aceptar',
                                         style: TextStyle(fontSize: 16)),
                                     onPressed: () {
-                                      postService
-                                          .deletePost(postService.posts[index]);
+                                      postService.deletePost(postService.posts[index]);
                                       Navigator.pushNamed(context, 'home');
                                     }),
                               ],
                             ));
-
-                    postService.selectedPost = postService.posts[index];
-
-                    postService.deletePost(postService.selectedPost);
                   },
                   icon: Icon(Icons.delete, size: 25, color: Colors.red)),
               top: 5,

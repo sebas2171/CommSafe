@@ -1,4 +1,5 @@
 import 'package:comm_safe/provider/login_form_provider.dart';
+import 'package:comm_safe/services/services.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter/material.dart';
 
@@ -119,6 +120,8 @@ class _LoginForm extends StatelessWidget {
                       //login form
 
                       FocusScope.of(context).unfocus();
+                      final authService =
+                          Provider.of<AuthService>(context, listen: false);
 
                       if (!loginForm.isValidForm()) return;
 
@@ -126,9 +129,18 @@ class _LoginForm extends StatelessWidget {
 
                       await Future.delayed(Duration(seconds: 2));
 
-                      // validar si el login es correcto
-                      loginForm.isLoading = false;
-                      Navigator.pushReplacementNamed(context, 'home');
+                      //TODO: validar si el login es correcto
+                      final String errorMessage = await authService.login(
+                          loginForm.email, loginForm.password);
+                      if (errorMessage == null) {
+                        Navigator.pushReplacementNamed(context, 'home');
+                      } else {
+                        //TODO: mostrar error en pantalla
+                        //print(errorMessage);
+                        NotificationService.showSnackbar(
+                            "Email o contraseña no validos");
+                        loginForm.isLoading = false;
+                      }
                     },
             )
           ],

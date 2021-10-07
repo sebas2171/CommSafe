@@ -26,13 +26,15 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Post Robos',
-      initialRoute: 'home',
+      initialRoute: 'login',
       routes: {
         'login': (_) => LoginScreen(),
         'register': (_) => RegisterScreen(),
         'home': (_) => HomeScreen(),
-        'post': (_) => PostScreen()
+        'post': (_) => PostScreen(),
+        'checking': (_) => CheckAuthScreen()
       },
+      scaffoldMessengerKey: NotificationService.messengerKey,
       theme: mitema,
     );
   }

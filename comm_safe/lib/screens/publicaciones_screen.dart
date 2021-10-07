@@ -19,12 +19,13 @@ class NewsScreen extends StatelessWidget{
 
     return Scaffold(
 
-      body: ListView.builder(
-        itemCount: postService.posts.length,
-        //el metodo PostCard() se encuentra dentro de la carpeta widgets en el archivo Post_card.dart
-        itemBuilder: (BuildContext context, int index) => PostCard(posts: postService.posts[index]),
-        
-      ),
+      body:  ListView.builder(
+              itemCount: postService.posts.length,
+              //el metodo PostCard() se encuentra dentro de la carpeta widgets en el archivo Post_card.dart
+              itemBuilder: (BuildContext context, int index) => PostCard(posts: postService.posts[index]),
+              
+        ),
+      
       floatingActionButton: FloatingActionButton(
         child: Icon(Icons.add),
         onPressed: (){ 
@@ -40,4 +41,5 @@ class NewsScreen extends StatelessWidget{
     ) ;
   }
   }
+  
 }

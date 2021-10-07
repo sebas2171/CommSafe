@@ -154,6 +154,4 @@ class PostService with ChangeNotifier{
 
   }
 
-
-
 }

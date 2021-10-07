@@ -71,6 +71,7 @@ class PostCard extends StatelessWidget {
                       child: Text('Aceptar'), 
                       onPressed: () async{
                         await postService.deletePost(postService.posts[index]);
+                        await postService.loadPosts();
                         Navigator.pushNamed(context, 'home');
                       }),
 

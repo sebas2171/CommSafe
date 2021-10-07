@@ -1,16 +1,18 @@
 import 'package:comm_safe/screens/screens.dart';
+import 'package:comm_safe/services/services.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    final authService = Provider.of<AuthService>(context, listen: false);
     return ChangeNotifierProvider(
       create: (_) => new _NavegacionModel(),
       child: Scaffold(
         appBar: AppBar(
           leading: IconButton(
-            icon: Icon(Icons.exit_to_app),
+            icon: Icon(Icons.login_outlined),
             onPressed: () {
               showDialog(
                 context: context,
@@ -20,6 +22,7 @@ class HomeScreen extends StatelessWidget {
                     TextButton(
                       child: Text('Aceptar', style: TextStyle(fontSize: 16)),
                       onPressed: () {
+                        authService.logout();
                         Navigator.pushReplacementNamed(context, 'login');
                       },
                     ),

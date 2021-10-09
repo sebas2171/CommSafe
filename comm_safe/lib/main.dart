@@ -33,7 +33,8 @@ class MyApp extends StatelessWidget {
         'register': (_) => RegisterScreen(),
         'home': (_) => HomeScreen(),
         'post': (_) => PostScreen(),
-        'checking': (_) => CheckAuthScreen()
+        'checking': (_) => CheckAuthScreen(),
+        'alert': (_) => Location()
       },
       scaffoldMessengerKey: NotificationService.messengerKey,
       theme: mitema,

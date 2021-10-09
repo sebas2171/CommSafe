@@ -10,33 +10,31 @@ class MapScreen extends StatefulWidget {
 }
 
 class _MapScreenState extends State<MapScreen> {
-  static const _initialCameraPosition = CameraPosition(
-    target: LatLng(7.11591, -73.11221),
-    zoom: 12.5,
-  );
-
   GoogleMapController _googleMapController;
 
   @override
-  void dispose() {
-    _googleMapController.dispose();
-    super.dispose();
-  }
-
-  @override
   Widget build(BuildContext context) {
+    var userLocation = Provider.of<UserLocation>(context);
     return Scaffold(
-      body: GoogleMap(
-        //zoomControlsEnabled: false,
-        initialCameraPosition: _initialCameraPosition,
-        onMapCreated: (controller) => _googleMapController = controller,
-      ),
+      body: userLocation != null
+          ? GoogleMap(
+              //zoomControlsEnabled: false,
+              initialCameraPosition: CameraPosition(
+                  target: LatLng(userLocation.latitude, userLocation.longitude),
+                  zoom: 15.5),
+              onMapCreated: (controller) => _googleMapController = controller,
+            )
+          : Container(),
       bottomNavigationBar: AlertButtom(),
       floatingActionButton: FloatingActionButton(
         backgroundColor: Colors.white,
         foregroundColor: Colors.black.withOpacity(0.6),
         onPressed: () => _googleMapController.animateCamera(
-          CameraUpdate.newCameraPosition(_initialCameraPosition),
+          CameraUpdate.newCameraPosition(
+            CameraPosition(
+                target: LatLng(userLocation.latitude, userLocation.longitude),
+                zoom: 15.5),
+          ),
         ),
         child: const Icon(Icons.center_focus_strong),
       ),
@@ -48,6 +46,7 @@ class _MapScreenState extends State<MapScreen> {
 class AlertButtom extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    var userLocation = Provider.of<UserLocation>(context);
     return BottomAppBar(
       child: Container(
         height: 160,
@@ -63,6 +62,21 @@ class AlertButtom extends StatelessWidget {
         child: Stack(
           children: [
             _Buttom(),
+            Align(
+              alignment: FractionalOffset.bottomCenter,
+              child: Padding(
+                padding: EdgeInsets.only(bottom: 10.0),
+                child: userLocation != null
+                    ? Text(
+                        'Localización: ${userLocation.latitude}, ${userLocation.longitude}',
+                        style: TextStyle(
+                            fontSize: 15, color: Colors.black.withOpacity(0.8)))
+                    : Text('Esperando Localización.',
+                        style: TextStyle(
+                            fontSize: 15,
+                            color: Colors.black.withOpacity(0.8))),
+              ),
+            ),
           ],
         ),
       ),
@@ -77,14 +91,14 @@ class _Buttom extends StatelessWidget {
     return Scaffold(
       body: Center(
         child: RaisedButton(
-          padding: EdgeInsets.all(15),
+          padding: EdgeInsets.all(10),
           color: Colors.red,
           shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(18.0),
               side: BorderSide(color: Colors.red)),
           child: Text('Generar Alerta',
               style: TextStyle(
-                  fontSize: 30, color: Colors.black.withOpacity(0.6))),
+                  fontSize: 28, color: Colors.black.withOpacity(0.6))),
           onPressed: () {
             showDialog(
               context: context,
@@ -103,7 +117,7 @@ class _Buttom extends StatelessWidget {
                   FlatButton(
                     child: Text('Cancelar', style: TextStyle(fontSize: 16)),
                     onPressed: () {
-                      Navigator.of(context).pop('Cancel');
+                      Navigator.of(context).pop('Cancelar');
                     },
                   ),
                 ],

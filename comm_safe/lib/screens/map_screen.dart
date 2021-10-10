@@ -15,29 +15,65 @@ class _MapScreenState extends State<MapScreen> {
   @override
   Widget build(BuildContext context) {
     var userLocation = Provider.of<UserLocation>(context);
+
+    Set<Marker> markers = Set.from([
+      userLocation != null
+          ? Marker(
+              markerId: MarkerId('myMarker'),
+              draggable: false,
+              onTap: () {
+                print('Marker Tapped');
+              },
+              position: LatLng(userLocation.latitude, userLocation.longitude),
+              infoWindow: InfoWindow(
+                  title: 'Ubicación Actual',
+                  snippet: 'La alerta se generará en este punto.'),
+            )
+          : Marker(
+              markerId: MarkerId('noMarker'),
+            ),
+    ]);
+
+    Set<Circle> circles = Set.from([
+      userLocation != null
+          ? Circle(
+              circleId: CircleId('currentLocation'),
+              center: LatLng(userLocation.latitude, userLocation.longitude),
+              radius: 20,
+              fillColor: Colors.blue.withOpacity(0.5),
+              strokeColor: Colors.blue.withOpacity(0))
+          : Circle(
+              circleId: CircleId('notLocation'),
+            ),
+    ]);
     return Scaffold(
       body: userLocation != null
           ? GoogleMap(
               //zoomControlsEnabled: false,
               initialCameraPosition: CameraPosition(
                   target: LatLng(userLocation.latitude, userLocation.longitude),
-                  zoom: 15.5),
+                  zoom: 18.5),
+              markers: markers,
+              circles: circles,
               onMapCreated: (controller) => _googleMapController = controller,
             )
           : Container(),
       bottomNavigationBar: AlertButtom(),
-      floatingActionButton: FloatingActionButton(
-        backgroundColor: Colors.white,
-        foregroundColor: Colors.black.withOpacity(0.6),
-        onPressed: () => _googleMapController.animateCamera(
-          CameraUpdate.newCameraPosition(
-            CameraPosition(
-                target: LatLng(userLocation.latitude, userLocation.longitude),
-                zoom: 15.5),
-          ),
-        ),
-        child: const Icon(Icons.center_focus_strong),
-      ),
+      floatingActionButton: userLocation != null
+          ? FloatingActionButton(
+              backgroundColor: Colors.white,
+              foregroundColor: Colors.black.withOpacity(0.6),
+              onPressed: () => _googleMapController.animateCamera(
+                CameraUpdate.newCameraPosition(
+                  CameraPosition(
+                      target:
+                          LatLng(userLocation.latitude, userLocation.longitude),
+                      zoom: 18.5),
+                ),
+              ),
+              child: const Icon(Icons.center_focus_strong),
+            )
+          : Container(),
       floatingActionButtonLocation: FloatingActionButtonLocation.startFloat,
     );
   }
@@ -68,10 +104,10 @@ class AlertButtom extends StatelessWidget {
                 padding: EdgeInsets.only(bottom: 10.0),
                 child: userLocation != null
                     ? Text(
-                        'Localización: ${userLocation.latitude}, ${userLocation.longitude}',
+                        'Ubucación: ${userLocation.latitude}, ${userLocation.longitude}',
                         style: TextStyle(
                             fontSize: 15, color: Colors.black.withOpacity(0.8)))
-                    : Text('Esperando Localización.',
+                    : Text('Cargando Ubicación...',
                         style: TextStyle(
                             fontSize: 15,
                             color: Colors.black.withOpacity(0.8))),

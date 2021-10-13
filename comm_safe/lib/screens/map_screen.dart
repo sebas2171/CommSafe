@@ -47,6 +47,7 @@ class _MapScreenState extends State<MapScreen> {
             ),
     ]);
     return Scaffold(
+      
       body: userLocation != null
           ? GoogleMap(
               //zoomControlsEnabled: false,
@@ -83,6 +84,8 @@ class AlertButtom extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var userLocation = Provider.of<UserLocation>(context);
+    final postService = Provider.of<PostService>(context);
+
     return BottomAppBar(
       child: Container(
         height: 160,
@@ -95,9 +98,45 @@ class AlertButtom extends StatelessWidget {
             offset: Offset(0, -5),
           ),
         ]),
-        child: Stack(
+        child: Column(
           children: [
-            _Buttom(),
+            Container(
+              child: RaisedButton(
+          padding: EdgeInsets.all(10),
+          color: Colors.red,
+          shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(18.0),
+              side: BorderSide(color: Colors.red)),
+          child: Text('Generar Alerta',
+              style: TextStyle(
+                  fontSize: 28, color: Colors.black.withOpacity(0.6))),
+          onPressed: () {
+            showDialog(
+              context: context,
+              builder: (contex) => AlertDialog(
+                title: Text('La alerta se ha registrado satisfactoriamente.'),
+                content: Text('¿Desea publicar una Noticia?'),
+                actions: [
+                  TextButton(
+                    child: Text('Aceptar', style: TextStyle(fontSize: 16)),
+                    onPressed: () {
+
+                      postService.selectedPost = new Post();
+                      Navigator.pushNamed(context, 'post');
+                    },
+                  ),
+                  TextButton(
+                    child: Text('Cancelar', style: TextStyle(fontSize: 16)),
+                    onPressed: () {
+                      Navigator.pushNamed(context, 'map');
+                    },
+                  ),
+                ],
+              ),
+            );
+          },
+        ),
+            ),
             Align(
               alignment: FractionalOffset.bottomCenter,
               child: Padding(
@@ -123,7 +162,8 @@ class AlertButtom extends StatelessWidget {
 class _Buttom extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final postService = Provider.of<PostService>(context);
+
+    
     return Scaffold(
       body: Center(
         child: RaisedButton(
@@ -141,16 +181,16 @@ class _Buttom extends StatelessWidget {
               builder: (contex) => AlertDialog(
                 title: Text('La alerta se ha registrado satisfactoriamente.'),
                 content: Text('¿Desea publicar una Noticia?'),
-                actions: <Widget>[
-                  FlatButton(
+                actions: [
+                  TextButton(
                     child: Text('Aceptar', style: TextStyle(fontSize: 16)),
                     onPressed: () {
-                      postService.selectedPost =
-                          new Post(titulo: '', detalle: '');
-                      Navigator.pushNamed(context, 'post');
+
+                      PostService().selectedPost = new Post();
+                      Navigator.pushNamed(context, 'home');
                     },
                   ),
-                  FlatButton(
+                  TextButton(
                     child: Text('Cancelar', style: TextStyle(fontSize: 16)),
                     onPressed: () {
                       Navigator.of(context).pop('Cancelar');
@@ -158,7 +198,7 @@ class _Buttom extends StatelessWidget {
                   ),
                 ],
               ),
-            ).then((result) {});
+            );
           },
         ),
       ),

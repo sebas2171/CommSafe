@@ -30,6 +30,7 @@ class MyApp extends StatelessWidget {
       routes: {
         'login': (_) => LoginScreen(),
         'register': (_) => RegisterScreen(),
+        'map': (_) => MapScreen(),
         'home': (_) => HomeScreen(),
         'post': (_) => PostScreen(),
         'checking': (_) => CheckAuthScreen(),

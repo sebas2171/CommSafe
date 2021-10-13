@@ -16,8 +16,7 @@ class PostCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final postService = Provider.of<PostService>(context);
-    final index =
-        postService.posts.indexWhere((element) => element.id == posts.id);
+    final index = postService.posts.indexWhere((element) => element.id == posts.id);
 
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: 15),

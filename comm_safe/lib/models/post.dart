@@ -5,40 +5,35 @@
 import 'dart:convert';
 
 class Post {
-    Post({
-        this.detalle,
-        this.picture,
-        this.titulo,
-        this.id
-    });
+  Post({this.detalle, this.picture, this.titulo, this.id, this.comentarios});
+  List<dynamic> comentarios;
+  String detalle;
+  String picture;
+  String titulo;
+  String id;
 
-    String detalle;
-    String picture;
-    String titulo;
-    String id;
+  factory Post.fromJson(String str) => Post.fromMap(json.decode(str));
 
-    factory Post.fromJson(String str) => Post.fromMap(json.decode(str));
+  String toJson() => json.encode(toMap());
 
-    String toJson() => json.encode(toMap());
-
-    factory Post.fromMap(Map<String, dynamic> json) => Post(
+  factory Post.fromMap(Map<String, dynamic> json) => Post(
+        comentarios: json["comentarios"],
         detalle: json["detalle"],
         picture: json["picture"],
         titulo: json["titulo"],
-    );
+      );
 
-    Map<String, dynamic> toMap() => {
+  Map<String, dynamic> toMap() => {
+        "comentarios": comentarios,
         "detalle": detalle,
         "picture": picture,
         "titulo": titulo,
-    };
+      };
 
-
-    Post copy() => Post(
-
+  Post copy() => Post(
+      comentarios: this.comentarios,
       detalle: this.detalle,
       picture: this.picture,
       titulo: this.titulo,
-      id: this.id
-    );
+      id: this.id);
 }

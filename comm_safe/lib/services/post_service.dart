@@ -4,8 +4,7 @@ import 'package:comm_safe/models/models.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
-class PostService with ChangeNotifier{
-
+class PostService with ChangeNotifier {
   final String _baseUrl = 'commsafe-cbacc-default-rtdb.firebaseio.com';
   List<Post> posts = [];
   Post selectedPost;
@@ -16,8 +15,7 @@ class PostService with ChangeNotifier{
   bool isSaving = false;
   bool isDelete = false;
 
-  PostService (){
-
+  PostService() {
     this.loadPosts();
   }
 
@@ -28,81 +26,65 @@ class PostService with ChangeNotifier{
     notifyListeners();
 
     final url = Uri.https(_baseUrl, 'posts.json');
-    final resp = await http.get( url );
+    final resp = await http.get(url);
 
-    final Map<String , dynamic> postsMap = json.decode(resp.body);
-    
+    final Map<String, dynamic> postsMap = json.decode(resp.body);
+
     postsMap.forEach((key, value) {
-      
       final tempPost = Post.fromMap(value);
       tempPost.id = key;
       this.posts.add(tempPost);
-
     });
 
     this.isLoading = false;
     notifyListeners();
 
     return this.posts;
-
   }
 
-  Future saveOrCreatePost(Post post) async{
-
+  Future saveOrCreatePost(Post post) async {
     isSaving = true;
     notifyListeners();
 
-
-    if (post.id == null){
-
+    if (post.id == null) {
       await this.createPost(post);
-
-    }
-    else {
+    } else {
       await this.updatePost(post);
     }
 
-
     isSaving = false;
     notifyListeners();
-
   }
 
-  Future<String> updatePost(Post post)async{
-    
+  Future<String> updatePost(Post post) async {
     final url = Uri.https(_baseUrl, 'posts/${post.id}.json');
-    final resp = await http.put( url, body: post.toJson());
+    final resp = await http.put(url, body: post.toJson());
     final decoderData = resp.body;
 
     final index = this.posts.indexWhere((element) => element.id == post.id);
     this.posts[index] = post;
 
     return post.id;
-
   }
 
-
-  Future<String> createPost(Post post)async{
-    
+  Future<String> createPost(Post post) async {
     final url = Uri.https(_baseUrl, 'posts.json');
-    final resp = await http.post( url, body: post.toJson());
+    final resp = await http.post(url, body: post.toJson());
     final decoderData = json.decode(resp.body);
 
-    post.id = decoderData ['name'];
+    post.id = decoderData['name'];
 
     this.posts.add(post);
 
     return post.id;
-
   }
 
-    Future<String> deletePost(Post post)async{
-
+  Future<String> deletePost(Post post) async {
     this.isDelete = true;
     notifyListeners();
-    
+
     final url = Uri.https(_baseUrl, 'posts/${post.id}.json');
-    final resp = await http.delete( url, body: post.toJson());
+    final resp = await http.delete(url, body: post.toJson());
     final decoderData = json.decode(resp.body);
 
     final index = this.posts.indexWhere((element) => element.id == post.id);
@@ -112,26 +94,22 @@ class PostService with ChangeNotifier{
     notifyListeners();
 
     return post.id;
-
-
   }
 
-  void updateoruploadImage(String path){
-
+  void updateoruploadImage(String path) {
     this.selectedPost.picture = path;
     this.pictureFile = File.fromUri(Uri(path: path));
 
     notifyListeners();
-
   }
 
-  Future<String> uploadImage() async{
-
-    if(this.pictureFile == null) return null;
+  Future<String> uploadImage() async {
+    if (this.pictureFile == null) return null;
     this.isSaving = true;
     notifyListeners();
 
-    final url = Uri.parse('https://api.cloudinary.com/v1_1/commsafe/image/upload?upload_preset=h1hdfcmt');
+    final url = Uri.parse(
+        'https://api.cloudinary.com/v1_1/commsafe/image/upload?upload_preset=h1hdfcmt');
 
     final imageUploadRequest = http.MultipartRequest('POST', url);
 
@@ -142,7 +120,7 @@ class PostService with ChangeNotifier{
     final streamResponse = await imageUploadRequest.send();
     final resp = await http.Response.fromStream(streamResponse);
 
-    if(resp.statusCode != 200 && resp.statusCode != 201){
+    if (resp.statusCode != 200 && resp.statusCode != 201) {
       print('algo salio mal');
       print(resp.body);
       return null;
@@ -152,7 +130,5 @@ class PostService with ChangeNotifier{
 
     final decodeData = json.decode(resp.body);
     return decodeData['secure_url'];
-
   }
-
 }

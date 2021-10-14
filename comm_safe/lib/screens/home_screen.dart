@@ -80,7 +80,7 @@ class _Paginas extends StatelessWidget {
       children: <Widget>[
         NewsScreen(),
         Location(),
-        Container(color: Colors.red)
+        ProfileScreen()
       ],
     );
   }

@@ -5,6 +5,7 @@ import 'package:comm_safe/services/services.dart';
 import 'package:provider/provider.dart';
 
 class MapScreen extends StatefulWidget {
+
   @override
   _MapScreenState createState() => _MapScreenState();
 }
@@ -47,7 +48,6 @@ class _MapScreenState extends State<MapScreen> {
             ),
     ]);
     return Scaffold(
-      
       body: userLocation != null
           ? GoogleMap(
               //zoomControlsEnabled: false,
@@ -83,8 +83,6 @@ class _MapScreenState extends State<MapScreen> {
 class AlertButtom extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    var userLocation = Provider.of<UserLocation>(context);
-    final postService = Provider.of<PostService>(context);
 
     return BottomAppBar(
       child: Container(
@@ -98,15 +96,27 @@ class AlertButtom extends StatelessWidget {
             offset: Offset(0, -5),
           ),
         ]),
-        child: Column(
+        child: _Buttom()
+      ),
+    );
+  }
+}
+
+class _Buttom extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+
+    var userLocation = Provider.of<UserLocation>(context);
+    final postService = Provider.of<PostService>(context);
+
+    
+    return Column(
           children: [
             Container(
-              child: RaisedButton(
-          padding: EdgeInsets.all(10),
-          color: Colors.red,
-          shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(18.0),
-              side: BorderSide(color: Colors.red)),
+              child: ElevatedButton(
+
+          style: ButtonStyle(backgroundColor: MaterialStateProperty.all<Color>(Colors.red),
+          padding: MaterialStateProperty.all<EdgeInsetsGeometry>(EdgeInsets.all(10))),
           child: Text('Generar Alerta',
               style: TextStyle(
                   fontSize: 28, color: Colors.black.withOpacity(0.6))),
@@ -115,20 +125,24 @@ class AlertButtom extends StatelessWidget {
               context: context,
               builder: (contex) => AlertDialog(
                 title: Text('La alerta se ha registrado satisfactoriamente.'),
-                content: Text('¿Desea publicar una Noticia?'),
+                content: Text('desea hacer una publicacion?'),
                 actions: [
                   TextButton(
                     child: Text('Aceptar', style: TextStyle(fontSize: 16)),
                     onPressed: () {
 
                       postService.selectedPost = new Post();
-                      Navigator.pushNamed(context, 'post');
+
+                       Navigator.pushNamed(contex, 'post');
+
                     },
                   ),
                   TextButton(
                     child: Text('Cancelar', style: TextStyle(fontSize: 16)),
                     onPressed: () {
-                      Navigator.pushNamed(context, 'map');
+
+                       Navigator.pop(contex);
+
                     },
                   ),
                 ],
@@ -137,6 +151,9 @@ class AlertButtom extends StatelessWidget {
           },
         ),
             ),
+
+        SizedBox(height: 30),
+
             Align(
               alignment: FractionalOffset.bottomCenter,
               child: Padding(
@@ -153,55 +170,7 @@ class AlertButtom extends StatelessWidget {
               ),
             ),
           ],
-        ),
-      ),
-    );
+        );
   }
 }
 
-class _Buttom extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-
-    
-    return Scaffold(
-      body: Center(
-        child: RaisedButton(
-          padding: EdgeInsets.all(10),
-          color: Colors.red,
-          shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(18.0),
-              side: BorderSide(color: Colors.red)),
-          child: Text('Generar Alerta',
-              style: TextStyle(
-                  fontSize: 28, color: Colors.black.withOpacity(0.6))),
-          onPressed: () {
-            showDialog(
-              context: context,
-              builder: (contex) => AlertDialog(
-                title: Text('La alerta se ha registrado satisfactoriamente.'),
-                content: Text('¿Desea publicar una Noticia?'),
-                actions: [
-                  TextButton(
-                    child: Text('Aceptar', style: TextStyle(fontSize: 16)),
-                    onPressed: () {
-
-                      PostService().selectedPost = new Post();
-                      Navigator.pushNamed(context, 'home');
-                    },
-                  ),
-                  TextButton(
-                    child: Text('Cancelar', style: TextStyle(fontSize: 16)),
-                    onPressed: () {
-                      Navigator.of(context).pop('Cancelar');
-                    },
-                  ),
-                ],
-              ),
-            );
-          },
-        ),
-      ),
-    );
-  }
-}

@@ -51,8 +51,7 @@ class PostCard extends StatelessWidget {
                                   'Cuidado, ¿desea eliminar la publicacion permanentemente?'),
                               actions: [
                                 TextButton(
-                                    child: Text('Cancelar',
-                                        style: TextStyle(fontSize: 16)),
+                                    child: Text('Cancelar', style: TextStyle(fontSize: 16)),
                                     onPressed: () {
                                       Navigator.of(context).pop('cancel');
                                     }),

@@ -1,6 +1,7 @@
 import 'package:comm_safe/models/models.dart';
 import 'package:comm_safe/screens/screens.dart';
 import 'package:comm_safe/services/services.dart';
+import 'package:comm_safe/widgets/Post_card_home.dart';
 import 'package:comm_safe/widgets/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -33,7 +34,7 @@ class _NewsScreenState extends State<NewsScreen> {
                 //el metodo PostCard() se encuentra dentro de la carpeta widgets en el archivo Post_card.dart
                 itemBuilder: (BuildContext context, int index) =>
                     GestureDetector(
-                      child: PostCard(posts: postService.posts[index]),
+                      child: PostCardHome(posts: postService.posts[index]),
                       onTap: () {
                         setState(() {
                           _height = 400.0;

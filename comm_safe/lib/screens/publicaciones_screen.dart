@@ -21,6 +21,7 @@ class _NewsScreenState extends State<NewsScreen> {
     final postService = Provider.of<PostService>(context);
 
     if (postService.isLoading) {
+      print('Hollaaaa');
       return LoadingScreen();
     } else {
       return Scaffold(
@@ -30,14 +31,16 @@ class _NewsScreenState extends State<NewsScreen> {
             ListView.builder(
                 itemCount: postService.posts.length,
                 //el metodo PostCard() se encuentra dentro de la carpeta widgets en el archivo Post_card.dart
-                itemBuilder: (BuildContext context, int index) => GestureDetector(
+                itemBuilder: (BuildContext context, int index) =>
+                    GestureDetector(
                       child: PostCard(posts: postService.posts[index]),
                       onTap: () {
                         setState(() {
                           _height = 400.0;
                           comentarios = postService.posts[index].comentarios;
                           if (comentarios != null) {
-                            comentarios.removeWhere((element) => element == null);
+                            comentarios
+                                .removeWhere((element) => element == null);
                           }
                         });
                       },
@@ -88,10 +91,32 @@ class _NewsScreenState extends State<NewsScreen> {
                           TextStyle(fontStyle: FontStyle.italic, fontSize: 20)),
                 ],
               ),
-              //SizedBox(height: 10.0),
-              Flexible(fit: FlexFit.loose, child: _commentList())
-              //Container(height: 100, color: Colors.red),
-              //Text('djdjkdljdl')
+
+              Flexible(fit: FlexFit.loose, child: _commentList()),
+
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                child: TextFormField(
+                  maxLength: 35,
+                  //initialValue: post.titulo,
+                  //onChanged: (value) => post.titulo = value,
+                  //validator: (value){if(value == null || value.length < 1) return 'Titulo obligatorio';},
+                  autocorrect: false,
+
+                  decoration: InputDecoration(
+                      enabledBorder: UnderlineInputBorder(
+                          borderSide: BorderSide(color: Colors.blue)),
+                      focusedBorder: UnderlineInputBorder(
+                        borderSide: BorderSide(
+                          color: Colors.blue,
+                          width: 2,
+                        ),
+                      ),
+                      labelStyle: TextStyle(color: Colors.grey),
+                      hintText: 'Titulo',
+                      labelText: 'Comentario'),
+                ),
+              ),
             ],
           ),
         ));
@@ -114,4 +139,3 @@ class _NewsScreenState extends State<NewsScreen> {
             ));
   }
 }
-

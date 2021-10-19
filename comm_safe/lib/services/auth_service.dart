@@ -48,8 +48,10 @@ class AuthService extends ChangeNotifier {
 
     if (decodedResp.containsKey('idToken')) {
       //guardar el token en un lugar seguro
-      //decodedResp['idToken'];
+      print('------------------');
+      print(decodedResp);
       await storage.write(key: 'token', value: decodedResp['idToken']);
+      await storage.write(key: 'id', value: decodedResp['localId']);
       return null;
     } else {
       return decodedResp['error']['message'];
@@ -58,11 +60,16 @@ class AuthService extends ChangeNotifier {
 
   Future logout() async {
     await storage.delete(key: 'token');
+    await storage.delete(key: 'id');
 
     return;
   }
 
   Future<String> readToken() async {
-    await storage.read(key: 'token') ?? '';
+    return await storage.read(key: 'token') ?? '';
+  }
+
+  Future<String> readId() async {
+    return await storage.read(key: 'id') ?? '';
   }
 }

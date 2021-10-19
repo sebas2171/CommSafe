@@ -16,11 +16,11 @@ class PostService with ChangeNotifier {
   bool isDelete = false;
 
   PostService() {
+    print('Hollaaaa------');
     this.loadPosts();
   }
 
   Future<List<Post>> loadPosts() async {
-
     this.posts = [];
     this.isLoading = true;
     notifyListeners();

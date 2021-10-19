@@ -5,11 +5,18 @@
 import 'dart:convert';
 
 class Post {
-  Post({this.detalle, this.picture, this.titulo, this.id, this.comentarios});
+  Post(
+      {this.detalle,
+      this.picture,
+      this.titulo,
+      this.id,
+      this.comentarios,
+      this.idUser});
   List<dynamic> comentarios;
   String detalle;
   String picture;
   String titulo;
+  String idUser;
   String id;
 
   factory Post.fromJson(String str) => Post.fromMap(json.decode(str));
@@ -21,6 +28,7 @@ class Post {
         detalle: json["detalle"],
         picture: json["picture"],
         titulo: json["titulo"],
+        idUser: json["idUser"],
       );
 
   Map<String, dynamic> toMap() => {
@@ -28,6 +36,7 @@ class Post {
         "detalle": detalle,
         "picture": picture,
         "titulo": titulo,
+        "idUser": idUser,
       };
 
   Post copy() => Post(
@@ -35,5 +44,6 @@ class Post {
       detalle: this.detalle,
       picture: this.picture,
       titulo: this.titulo,
+      idUser: this.idUser,
       id: this.id);
 }

@@ -2,8 +2,9 @@ import 'package:comm_safe/models/models.dart';
 import 'package:comm_safe/screens/screens.dart';
 import 'package:comm_safe/services/services.dart';
 import 'package:comm_safe/widgets/Post_card_home.dart';
-import 'package:comm_safe/widgets/widgets.dart';
+//import 'package:comm_safe/widgets/widgets.dart';
 import 'package:flutter/material.dart';
+//import 'package:http/http.dart';
 import 'package:provider/provider.dart';
 
 class NewsScreen extends StatefulWidget {
@@ -16,13 +17,14 @@ class NewsScreen extends StatefulWidget {
 class _NewsScreenState extends State<NewsScreen> {
   double _height = 0;
   List<dynamic> comentarios = [];
+  Post post;
+  
 
   @override
   Widget build(BuildContext context) {
     final postService = Provider.of<PostService>(context);
 
     if (postService.isLoading) {
-      print('Hollaaaa');
       return LoadingScreen();
     } else {
       return Scaffold(
@@ -61,6 +63,7 @@ class _NewsScreenState extends State<NewsScreen> {
   }
 
   Widget comentariosScreen() {
+
     return Align(
         alignment: Alignment.bottomLeft,
         child: AnimatedContainer(
@@ -99,6 +102,7 @@ class _NewsScreenState extends State<NewsScreen> {
                 padding: const EdgeInsets.symmetric(horizontal: 10.0),
                 child: TextFormField(
                   maxLength: 35,
+                  //initialValue: post.comentarios[index].toString(),
                   //initialValue: post.titulo,
                   //onChanged: (value) => post.titulo = value,
                   //validator: (value){if(value == null || value.length < 1) return 'Titulo obligatorio';},
@@ -134,7 +138,7 @@ class _NewsScreenState extends State<NewsScreen> {
         itemCount: comentarios.length,
         itemBuilder: (BuildContext context, int index) => Card(
               child: ListTile(
-                title: Text('Fecha y hora'),
+                title: Text('${DateTime.now()}'),
                 subtitle: Text(comentarios[index].toString()),
               ),
             ));

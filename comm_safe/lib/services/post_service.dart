@@ -16,7 +16,6 @@ class PostService with ChangeNotifier {
   bool isDelete = false;
 
   PostService() {
-    print('Hollaaaa------');
     this.loadPosts();
   }
 
@@ -76,6 +75,8 @@ class PostService with ChangeNotifier {
 
     this.posts.add(post);
 
+    print(decoderData);
+
     return post.id;
   }
 
@@ -108,8 +109,7 @@ class PostService with ChangeNotifier {
     this.isSaving = true;
     notifyListeners();
 
-    final url = Uri.parse(
-        'https://api.cloudinary.com/v1_1/commsafe/image/upload?upload_preset=h1hdfcmt');
+    final url = Uri.parse('https://api.cloudinary.com/v1_1/commsafe/image/upload?upload_preset=h1hdfcmt');
 
     final imageUploadRequest = http.MultipartRequest('POST', url);
 
@@ -131,4 +131,12 @@ class PostService with ChangeNotifier {
     final decodeData = json.decode(resp.body);
     return decodeData['secure_url'];
   }
+
+  void createComent(List coment) {
+    this.selectedPost.comentarios = coment;
+
+    notifyListeners();
+  }
+
+
 }

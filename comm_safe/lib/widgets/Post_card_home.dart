@@ -74,11 +74,11 @@ class _PostTitle extends StatelessWidget {
                 textAlign: TextAlign.center),
           ),
           SizedBox(height: 5),
-          Text('Etiquetas: robo a mano armada, hurto',
-              style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 13,
-                  fontStyle: FontStyle.italic))
+          // Text('Etiquetas: robo a mano armada, hurto',
+          //     style: TextStyle(
+          //         color: Colors.white,
+          //         fontSize: 13,
+          //         fontStyle: FontStyle.italic))
         ]),
         decoration: BoxDecoration(
             color: Colors.lightBlue.shade300,

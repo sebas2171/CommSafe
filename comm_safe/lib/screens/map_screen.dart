@@ -160,7 +160,7 @@ class _Buttom extends StatelessWidget {
                 padding: EdgeInsets.only(bottom: 10.0),
                 child: userLocation != null
                     ? Text(
-                        'Ubucación: ${userLocation.latitude}, ${userLocation.longitude}',
+                        'Ubicación: ${userLocation.latitude}, ${userLocation.longitude}',
                         style: TextStyle(
                             fontSize: 15, color: Colors.black.withOpacity(0.8)))
                     : Text('Cargando Ubicación...',

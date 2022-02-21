@@ -77,7 +77,8 @@ class PostCard extends StatelessWidget {
                   SizedBox(height: 60),
                   _PostDescription(posts.detalle),
                   SizedBox(height: 20),
-                  _Backgroundimage(posts.picture)
+                  _Backgroundimage(posts.picture),
+                  SizedBox(height: 20)
                 ],
               ),
             ),
@@ -111,12 +112,7 @@ class _PostTitle extends StatelessWidget {
                     fontStyle: FontStyle.italic),
                 textAlign: TextAlign.center),
           ),
-          SizedBox(height: 5),
-          Text('Etiquetas: robo a mano armada, hurto',
-              style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 13,
-                  fontStyle: FontStyle.italic))
+          SizedBox(height: 5)
         ]),
         decoration: BoxDecoration(
             color: Colors.lightBlue.shade300,

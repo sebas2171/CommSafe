@@ -102,8 +102,7 @@ class _PostScreenBody extends StatelessWidget {
 
                   if (imageUrl != null) postForm.post.picture = imageUrl;
 
-                  final authService =
-                      Provider.of<AuthService>(context, listen: false);
+                  final authService = Provider.of<AuthService>(context, listen: false);
 
                   postForm.post.idUser = await authService.readId();
                   await postService.saveOrCreatePost(postForm.post);
